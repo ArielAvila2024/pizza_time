@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle cuenta</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="bg-dark">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <!-- Logo -->
+                <a class="navbar-brand" href="/">
+                    <svg width="26" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-pizza">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path
+                            d="M12 21.5c-3.04 0 -5.952 -.714 -8.5 -1.983l8.5 -16.517l8.5 16.517a19.09 19.09 0 0 1 -8.5 1.983z" />
+                        <path d="M5.38 15.866a14.94 14.94 0 0 0 6.815 1.634a14.944 14.944 0 0 0 6.502 -1.479" />
+                        <path d="M13 11.01v-.01" />
+                        <path d="M11 14v-.01" />
+                    </svg> Pizza Time!
+                </a>
+                <!-- Botón para colapsar el navbar en dispositivos pequeños -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!-- Contenido del navbar -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <!-- Links -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="/menu-principal">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/detalle-cuenta">Pedidos <span>{% if carrito %}{{ carrito|length
+                                    }}{% endif %}</span></a>
+                        </li>
+                    </ul>
+                    <!-- Botón y menú de perfil -->
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle"></i> Mi Cuenta
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/mi-cuenta">Ajustes</a></li>
+                            <li><a class="dropdown-item" href="/logout">Cerrar Sesión</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!--Arma tu pizza-->
+        <form action="/hacer-pedido" method="POST" id="formDetallePedido">
+            <h1 class="h1 mt-3 text-white text-center mb-5">Tu orden!</h1>
+            <div class="pedido text-white col-4">
+                <div class="detalle-primera-fila">
+                    <h4>Detalle de tu pedido:</h4>
+                </div>
+                {% set total = 0 %}
+                {% for item in carrito %}
+                <div class="detalle-segunda-fila">
+                    <div class="d-flex justify-content-between">
+                        <span>Masa:</span><span>{{ item['corteza'] }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Tamaño:</span><span>{{ item['size'] }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Cantidad:</span><span>{{ item['cantidad'] }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Sub-total:</span><span id="sub_total">{{ item['total'] }}</span>
+                    </div>
+                    {% set total = total + item['total'] %}
+                </div>
+                <hr>
+                {% endfor %}
+                <div class="detalle-tercera-fila">
+                    <div>
+                        <span>Total:</span>
+                    </div>
+                    <div>
+                        <span id="total">0</span>
+                    </div>
+                </div>
+                <hr>
+                <div class="mb-3">
+                    <label for="metodo-envio" class="mb-3">Metodo de envio:</label>
+                    <select class="form-control" name="metodo_entrega" id="">
+                        <option value="Retiro en tienda">Retiro en tienda</option>
+                        <option value="Delivery">Delivery</option>
+                    </select>
+                </div>
+            </div>
+            <div class="d-grid gap-2 col-4">
+                <input type="hidden" id="hidden_total" name="hidden_total" value="0">
+                <input type="submit" value="Hacer pedido" class="btn btn-success mt-3">
+            </div>
+        </form>
+        <form action="/eliminar-pedido" method="POST" id="eliminarPedido">
+            <div class="d-grid gap-2 col-4">
+                <input type="submit" value="Eliminar pedido" class="btn btn-danger mt-3">
+            </div>
+            
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ url_for('static', filename='js/validaciones-detalleCuenta.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js"></script>
+    <link
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css"
+        rel="stylesheet">
+</head>
+
+<body class="bg-dark body_registro">
+    <div class="container">
+        <nav class="navbar navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand h2" href="/">
+                    <svg width="26" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-pizza">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path
+                            d="M12 21.5c-3.04 0 -5.952 -.714 -8.5 -1.983l8.5 -16.517l8.5 16.517a19.09 19.09 0 0 1 -8.5 1.983z" />
+                        <path d="M5.38 15.866a14.94 14.94 0 0 0 6.815 1.634a14.944 14.944 0 0 0 6.502 -1.479" />
+                        <path d="M13 11.01v-.01" />
+                        <path d="M11 14v-.01" />
+                    </svg> Pizza Time!
+                </a>
+                <span class="navbar-text">Ya tienes una cuenta? <a href="/">Inicia sesion</a></span>
+            </div>
+        </nav>
+        <!--Formulario de registro-->
+        <div class="d-flex align-items-center">
+            <div class="col-5 text-white mx-auto">
+                <h2 class="h2 mb-3 fw-20 text-center">Registrate</h2>
+                <!-- Mensaje de error -->
+                <div id="erroresRegistro" class="">
+                </div>
+                <form action="/register" method="POST" id="formRegistro">
+                    <div class="d-flex justify-content-between">
+                        <div class="col-md-5">
+                            <label class="mb-2">Nombre:</label>
+                            <input type="text" name="nombre" class="form-control mb-2">
+                        </div>
+                        <div class="col-md-5">
+                            <label class="mb-2">Apellido:</label>
+                            <input type="text" name="apellido" class="form-control mb-2">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="mb-2">Email:</label>
+                        <input type="text" name="email" class="form-control mb-2">
+                    </div>
+                    <div class="map-registro">
+                        <label class="mb-2">Direccion:</label>
+                        <div id="map"></div>
+                        <div id="geocoder-container"></div>
+                    </div>
+                    <div>
+                        <label class="mb-2">Contraseña:</label>
+                        <input type="password" name="password" class="form-control mb-2">
+                    </div>
+                    <div>
+                        <label class="mb-2">Confirmación:</label>
+                        <input type="password" name="confirm" class="form-control mb-2">
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <input type="hidden" id="ubicacion" name="ubicacion">
+                        <input type="submit" value="Registrarme" class="btn btn-primary mt-3">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/validaciones-registro.js') }}"></script>
+</body>
+
+</html>
