@@ -1,0 +1,11 @@
+Hola a todos, este es un pequeño desarrollo web Full-Stack Python Flask en donde podemos aprender:
+- El uso de rutas con Flask.
+- Uso de sesiones.
+- Validaciones con AJAX.
+- conexión a la base de datos MySQL.
+- CRUD y autenticación de usuarios.
+- POO con Python.
+- Uso de servicios como mapbox.
+- Carrito de compras utilizando las cookies del navegador.
+- Páginas dinámicas con JavaScript.
+- Entre otras funcionalidades.
